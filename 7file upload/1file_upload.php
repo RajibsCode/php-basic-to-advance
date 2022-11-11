@@ -1,34 +1,34 @@
 <?php
-// set condition
+// 1 set condition
 if(isset($_POST['file_submit'])){
-    // set path where file upload
+    // 3 set path where file upload
     $path = 'uploads/';
     $path = $path . basename($_FILES['file_upload']['name']);
 
-    // set which file extensions are allowed
+    // 7 set which file extensions are allowed
     $allowed_extensions = [
         'jpg',
         'png'
     ];
 
-    // get file extension path info which file will upload
+    // 8 get file extension path info which file will upload
     $file_extension = pathinfo($_FILES['file_upload']['name'], PATHINFO_EXTENSION);
 
-    // check file exist or not then upload
+    // 6 validation check file exist or not then upload
     if (!file_exists($_FILES['file_upload']['tmp_name'])) {
         $alert = [
             'type' => 'danger',
             'msg' => 'file does not exist. please upload your file!'
         ];
 
-     // check file extension are match or not which file upload  
+     // 9 validation check file extension are match or not which file upload  
     }elseif (!in_array($file_extension, $allowed_extensions)) {
         $alert = [
             'type' => 'danger',
             'msg' => 'Upload valid image only. png & jpg allowed'
         ]; 
     
-    // file size validation
+    // 10 file size validation
     }elseif ($_FILES['file_upload']['size'] > 2000000) {
         $alert = [
             'type' => 'danger',
@@ -38,7 +38,7 @@ if(isset($_POST['file_submit'])){
     }
     else{
 
-        // set filename and destination into move_uploaded_file() fdunction
+        // 4 set filename and destination into move_uploaded_file() fdunction
         if(move_uploaded_file($_FILES['file_upload']['tmp_name'],$path)){
             $alert = [
                 'type' => 'success',
@@ -54,7 +54,7 @@ if(isset($_POST['file_submit'])){
     }
     
 
-    // show the dynamic alert
+    // 5 show the dynamic alert
     if (!empty($alert)) {
         echo '<div class="alert alert-'.$alert['type'].'" role="alert">'
         .$alert['msg'].
@@ -62,7 +62,7 @@ if(isset($_POST['file_submit'])){
     }
 
 echo "<pre>";
-// print submitted files data
+// 2 print submitted files data
 print_r($_FILES['file_upload']);
 }
 
