@@ -25,6 +25,11 @@ echo "<br>";
 echo "my user id is ".$_SESSION['user_id'];
 
 
+echo "<hr>";
+// check if sessions value is active or not
+echo "<pre>";
+print_r($_SESSION);
+
 // destroy session with sesson_destroy() and then set session = null
 session_destroy();
 $_SESSION = []; // or use this $_SESSION = array();
