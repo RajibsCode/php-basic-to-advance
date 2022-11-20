@@ -1,3 +1,46 @@
+
+<?php
+
+// 1 atfirst start session and require the db file
+session_start();
+require_once'db-connection.php';
+
+// 2 start code foir submit form
+if (isset($_POST['login'])) {
+
+  // 3 prevent sql injection with mysqli_real_escape_string()
+  $email = mysqli_real_escape_string($con,$_POST['email']);
+  $password = mysqli_real_escape_string($con,$_POST['password']);
+
+  // 4 set and execute query
+  $sql = "SELECT * FROM user WHERE email = '$email' AND password ='$password'";
+  $execute = $con->query($sql);
+
+  // 5 set condition for login
+  if ($execute->num_rows > 0) {
+
+    // 7 set data in session by fetch_object()
+    $_SESSION['user_data'] = $execute->fetch_object();
+    // echo "<pre>";
+    // print_r($_SESSION);
+
+    // 6 redirect after login
+    header("Refresh:2, url=index.php");
+
+    // 8 alert show
+    echo '<div class="alert alert-success" role="alert"> Welcome ' . $_SESSION['user_data']->fname .' Thanks For Login!</div>'; // show data from session
+
+  }else {
+
+    echo '<div class="alert alert-danger" role="alert">Email Or Password in invalid</div>';
+  }
+
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +56,7 @@
     <div class="user-registration mt-5 mb-5">
         <h4>Login Now</h4>
         <a href="#">OR Register An Account!</a>
-        <form class="mt-3" method="post" enctype="multipart/form-data">
+        <form class="mt-3" method="post">
           
         <div class="mb-3">
           <label for="email" class="form-label">Email address</label>
@@ -24,7 +67,7 @@
           <input type="password" class="form-control" id="password" name="password">
         </div>
 
-        <button type="submit" class="btn btn-success">Login Now</button>
+        <button name="login" type="submit" class="btn btn-success">Login Now</button>
       </form>
     </div>
     
