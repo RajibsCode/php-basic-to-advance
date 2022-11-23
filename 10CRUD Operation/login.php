@@ -27,12 +27,6 @@ if (isset($_POST['login'])) {
     // 6 redirect after login
     header("Refresh:2, url=index.php");
 
-    // 8 alert show
-    echo '<div class="alert alert-success" role="alert"> Welcome ' . $_SESSION['user_data']->fname .' Thanks For Login!</div>'; // show data from session
-
-  }else {
-
-    echo '<div class="alert alert-danger" role="alert">Email Or Password in invalid</div>';
   }
 
 }
@@ -53,9 +47,39 @@ if (isset($_POST['login'])) {
 </head>
 <body>
 
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand me-auto" href="#">Users Data</a>
+            <a class="btn btn-success logout-button" href="#">Register Now</a>
+
+          </div>
+        </div>
+      </nav>
+
+
+
+
     <div class="user-registration mt-5 mb-5">
         <h4>Login Now</h4>
         <a href="#">OR Register An Account!</a>
+
+        <?php
+          // 8 alert show
+          if (isset($_SESSION['user_data'])) {
+
+              echo '<div class="alert alert-success" role="alert"> Welcome ' . $_SESSION['user_data']->fname .' Thanks For Login!</div>'; // show data from session
+
+          }elseif (isset($execute) && $execute->num_rows < 1) {
+
+            echo '<div class="alert alert-danger" role="alert">Email Or Password in invalid</div>';
+          }
+        ?>
+        
         <form class="mt-3" method="post">
           
         <div class="mb-3">

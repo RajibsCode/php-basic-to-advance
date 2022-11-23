@@ -1,3 +1,37 @@
+
+<?php
+// 1 start session and require db file
+session_start();
+require_once 'db-connection.php';
+
+// 9 another system for protect index page
+if (!isset($_SESSION['user_data'])) {
+  header('Location:login.php');
+}
+
+// 2 select query
+$sql = "SELECT * FROM user";
+$execute = $con->query($sql);
+
+// 3 fetch_object() for get data use while loop for all data
+while ($data = $execute->fetch_object()) {
+  // 4 get al data in a array
+  $users[] = $data;
+}
+
+// 6 make array for full form data for state
+$states = [
+  'gj' => 'Gujrat',
+  'dl' => 'Delhi',
+  'rj' => 'Rajasthan',
+  'mh' => 'Maharashtra',
+  'sk' => 'Sikkim',
+  'pb' => 'Punjab',
+];
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,14 +51,20 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <a class="navbar-brand me-auto" href="#">Users Data</a>
-            <a class="btn btn-danger logout-button" href="#">Logout Now</a>
+
+            <?php 
+            // 8 Dynamic logut button and protect index page
+            if (isset($_SESSION['user_data'])) {
+              echo '<a class="btn btn-danger logout-button" href="#">Logout Now</a>';
+            }else{
+              echo '<a class="btn btn-primary logout-button" href="#">Login Now</a>';
+              header("Location:login.php");
+            }
+            ?>
 
           </div>
         </div>
       </nav>
-
-
-
 
     <table class="table table-striped">
         <thead>
@@ -36,30 +76,42 @@
             <th scope="col">Contact</th>
             <th scope="col">Gender</th>
             <th scope="col">Adress</th>
-            <th scope="col">Division</th>
+            <th scope="col">State</th>
             <th scope="col">Hobby</th>
             <th scope="col">Profile Image</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
+
+        <?php
+          // for serial number
+          $s=1;
+          // 5 data show in table by loop
+          foreach ($users as $user) {
+        ?>
           <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
+            <th scope="row"><?php echo $s; ?></th>
+            <td><?php echo $user->fname; ?></td>
+            <td><?php echo $user->lname; ?></td>
+            <td><?php echo $user->email; ?></td>
+            <td><?php echo $user->contact; ?></td>
+            <td><?php echo $user->gender; ?></td>
+            <td><?php echo $user->adress; ?></td>
+            <?php // 7 use ternary operator for show state ?>
+            <td><?php echo isset($states[$user->state]) ? $states[$user->state] : null; ?></td>
+            <td><?php echo $user->hobbies; ?></td>
+            <td><img src="<?php echo 'includes/img/' . $user->profile;?>" alt="img here" width="50px"></td>
             <td>
-                <a href="#" class="btn btn-primary edit-button">Edit</a>
-                <a href="#" class="btn btn-danger delete-button">Delete</a>
+                <a href="update.php?user=<?php echo $user->id; ?>" class="btn btn-warning edit-button">Edit</a>
+                <a href="delete.php?user=<?php echo $user->id; ?>" class="btn btn-danger delete-button">Delete</a>
             </td>
           </tr>
-
+        <?php
+            // increase one by one serial number
+            $s++;
+          }
+        ?>
         </tbody>
       </table>
 

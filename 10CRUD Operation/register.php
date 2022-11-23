@@ -25,7 +25,7 @@ $profile = (file_exists($_FILES['profile']['tmp_name'])) ? $file_name : null;
     'contact' => $_POST['contact'],
     'gender' => $_POST['gender'],
     'adress' => $_POST['address'],
-    'division' => $_POST['division'],
+    'state' => $_POST['state'],
     'profile' => $profile,
     'hobbies' => implode(',',$_POST['hobbies']) // 4 implode() for values separate with comma
    ];
@@ -81,10 +81,25 @@ $profile = (file_exists($_FILES['profile']['tmp_name'])) ? $file_name : null;
 </head>
 <body>
 
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand me-auto" href="#">Users Data</a>
+            <a class="btn btn-primary logout-button" href="#">Login Now</a>
+
+          </div>
+        </div>
+      </nav>
+
+
     <div class="user-registration mt-5 mb-5">
         <h4>Register Now</h4>
         <a href="#">Already Have Account!</a>
-        <form class="mt-3" action="register.php" method="post" enctype="multipart/form-data">
+        <form class="mt-3" method="post" enctype="multipart/form-data">
         <div class="mb-3">
           <label for="firstname" class="form-label">First name</label>
           <input type="text" class="form-control" id="firstname" name="firstname" required="">
@@ -130,16 +145,15 @@ $profile = (file_exists($_FILES['profile']['tmp_name'])) ? $file_name : null;
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Division</label>
-            <select class="form-select" aria-label="Default select example" required="" name="division">
+            <label class="form-label">State</label>
+            <select class="form-select" aria-label="Default select example" required="" name="state">
                 <option selected>select</option>
-                <option value="Dhaka">Dhaka</option>
-                <option value="Khulna">Khulna</option>
-                <option value="Sylhet">Sylhet</option>
-                <option value="Chittagong">Chittagong</option>
-                <option value="Rajshahi">Rajshahi</option>
-                <option value="Mymensingh">Mymensingh</option>
-                <option value="Barishal">Barishal</option>
+                <option value="gj">Gujrat</option>
+                <option value="dl">Delhi</option>
+                <option value="rj">Rajasthan</option>
+                <option value="mh">Maharashtra</option>
+                <option value="sk">Sikkim</option>
+                <option value="pb">Punjab</option>
             </select>
         </div>
 
