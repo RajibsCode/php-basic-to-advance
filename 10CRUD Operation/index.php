@@ -55,7 +55,7 @@ $states = [
             <?php 
             // 8 Dynamic logut button and protect index page
             if (isset($_SESSION['user_data'])) {
-              echo '<a class="btn btn-danger logout-button" href="#">Logout Now</a>';
+              echo '<a class="btn btn-danger logout-button" href="logout.php">Logout Now</a>';
             }else{
               echo '<a class="btn btn-primary logout-button" href="#">Login Now</a>';
               header("Location:login.php");
@@ -104,7 +104,7 @@ $states = [
             <td><img src="<?php echo 'includes/img/' . $user->profile;?>" alt="img here" width="50px"></td>
             <td>
                 <a href="update.php?user=<?php echo $user->id; ?>" class="btn btn-warning edit-button">Edit</a>
-                <a href="delete.php?user=<?php echo $user->id; ?>" class="btn btn-danger delete-button">Delete</a>
+                <a href="delete.php?user=<?php echo $user->id; ?>" class="btn btn-danger delete-button" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
             </td>
           </tr>
         <?php
